@@ -1,31 +1,18 @@
 var express = require('express');
-var app = express();
-app.use(express.logger());
+var fs = require('fs');
 
-//app.get('/', function(request, response) {
-//  response.send('Hello World2!!');
-//});
+var data = fs.readFileSync("index.html","utf-8");
+
+var app = express.createServer(express.logger());
+app.get('/',function(request,response) {
+    response.send(data);
+});
 
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
-  console.log("Listening on " + port);
+    console.log("Listening on " + port);
 });
 
-//start of new script
-var content;
-// First I want to read the file
-fs.readFile('./index.html', function read(err, data) {
-    if (err) {
-        throw err;
-    }
-    content = data;
 
-    // Invoke the next step here however you like
-  //  console.log(content);   // Put all of the code here (not the best solution)
-    processFile();          // Or put the next step in a function and invoke it
-});
 
-function processFile() {
-    console.log(content);
-}
 
